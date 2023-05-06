@@ -138,7 +138,7 @@ class Config
     ];
 
     /** @var string|null La version de l'application, mise en "cache". */
-    private static $versionCached;
+    private static $versionCached = '0.20.6';
 
     /**
      * @var array|null En environnement de test, plutôt que d'utiliser un

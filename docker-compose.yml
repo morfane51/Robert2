@@ -1,0 +1,75 @@
+version: '3'
+
+networks:
+    robert-network:
+
+services:
+
+    # nginx
+    robert-nginx-service:
+        image: nginx:stable-alpine
+        container_name: robert-nginx-container
+        ports:
+            - "999:999"
+        volumes:
+            - ./app:/var/www/project
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - robert-app-service
+            - robert-mysql-service
+        networks:
+            - robert-network
+
+    # app
+    robert-app-service:
+        build:
+            context: .
+            dockerfile: ./app/Dockerfile
+        container_name: robert-app-container
+        volumes:
+            - ./:/var/www/html
+        networks:
+            - robert-network
+        depends_on:
+            - robert-mysql-service
+
+    # php
+    robert-php-service:
+        build:
+            context: .
+            dockerfile: ./php/Dockerfile
+        container_name: robert-php-container
+        ports:
+            - "9001:9000"
+        volumes:
+            - ./app:/var/www/html
+        networks:
+            - robert-network
+
+    # mysql
+    robert-mysql-service:
+        image: mysql:8
+        container_name: robert-mysql-container
+        ports:
+            - "3307:3306"
+        volumes:
+            - ./mysql:/var/lib/mysql
+        command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        restart: always # always restart unless stopped manually
+        environment:
+            MYSQL_ROOT_PASSWORD: secret
+            MYSQL_PASSWORD: secret
+            MYSQL_DATABASE: loxya
+        networks:
+            - robert-network
+
+    # node
+    robert-node-service:
+        build:
+            context: .
+            dockerfile: ./node/Dockerfile
+        container_name: robert-node-container
+        volumes:
+            - ./app:/var/www/html
+        networks:
+            - robert-network
