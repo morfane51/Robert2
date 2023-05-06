@@ -36,6 +36,10 @@ RUN printf "\n" | pecl install apcu \
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN printf '[PHP]\ndate.timezone = "Europe/Paris"\n' > /usr/local/etc/php/conf.d/tzone.ini
 
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - & apt-get install -y nodejs npm
+
 RUN chown -R www-data:www-data /var/www
 
 RUN rm -rf /var/lib/apt/lists/*

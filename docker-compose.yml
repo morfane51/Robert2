@@ -33,19 +33,6 @@ services:
         depends_on:
             - robert-mysql-service
 
-    # php
-    robert-php-service:
-        build:
-            context: .
-            dockerfile: ./php/Dockerfile
-        container_name: robert-php-container
-        ports:
-            - "9001:9000"
-        volumes:
-            - ./app:/var/www/html
-        networks:
-            - robert-network
-
     # mysql
     robert-mysql-service:
         image: mysql:8
@@ -60,16 +47,5 @@ services:
             MYSQL_ROOT_PASSWORD: secret
             MYSQL_PASSWORD: secret
             MYSQL_DATABASE: loxya
-        networks:
-            - robert-network
-
-    # node
-    robert-node-service:
-        build:
-            context: .
-            dockerfile: ./node/Dockerfile
-        container_name: robert-node-container
-        volumes:
-            - ./app:/var/www/html
         networks:
             - robert-network
