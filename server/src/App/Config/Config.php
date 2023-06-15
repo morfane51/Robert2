@@ -32,7 +32,7 @@ class Config
         'maxItemsPerPage' => 100,
         'defaultLang' => 'fr',
         'billingMode' => 'partial', // - Valeurs possibles : 'none', 'partial', 'all'.
-        'degressiveRateFunction' => 'daysCount',
+        'degressiveRateFunction' => '((daysCount - 1) * 0.25) + 1',
         'proxy' => [
             'enabled' => false,
             'host' => 'proxy.robert2.test',
