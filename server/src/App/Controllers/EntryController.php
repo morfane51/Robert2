@@ -41,7 +41,7 @@ class EntryController extends BaseController
 
     // ------------------------------------------------------
     // -
-    // -    Internal methods
+    // -    Méthodes internes
     // -
     // ------------------------------------------------------
 
@@ -67,6 +67,9 @@ class EntryController extends BaseController
             'currency' => $rawConfig['currency'],
             'billingMode' => $rawConfig['billingMode'],
             'maxFileUploadSize' => $rawConfig['maxFileUploadSize'],
+            'colorSwatches' => $rawConfig['colorSwatches'],
+            'authorizedFileTypes' => $rawConfig['authorizedFileTypes'],
+            'authorizedImageTypes' => $rawConfig['authorizedImageTypes'],
         ];
     }
 }
